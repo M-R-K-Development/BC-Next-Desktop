@@ -1,0 +1,13 @@
+{
+  "name": "Business_Catalyst_Tool",
+  "main": "index.html",
+  "window": {
+    "title": "Business Catalyst Tool",
+    "toolbar": true,
+    "width": 1024,
+    "height": 600,
+    "position": "mouse",
+    "min_width": 400,
+    "min_height": 200
+  }
+}

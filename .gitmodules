@@ -1,0 +1,9 @@
+[submodule "submodules/Font-Awesome"]
+	path = submodules/Font-Awesome
+	url = git@github.com:FortAwesome/Font-Awesome.git
+[submodule "submodules/ionicons"]
+	path = submodules/ionicons
+	url = git@github.com:driftyco/ionicons.git
+[submodule "submodules/jquery"]
+	path = submodules/jquery
+	url = git@github.com:jquery/jquery.git
