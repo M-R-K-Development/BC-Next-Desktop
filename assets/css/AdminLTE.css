@@ -1,6 +1,7 @@
-@import url(//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic);
-@import url(//fonts.googleapis.com/css?family=Kaushan+Script);
-/*! 
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic);
+
+@import url(https://fonts.googleapis.com/css?family=Kaushan+Script);
+/*!
  *   AdminLTE v1.2
  *   Author: AlmsaeedStudio.com
  *   License: Open source - MIT
@@ -867,6 +868,7 @@ body > .header .logo .icon {
   display: block;
   white-space: nowrap;
   /* Prevent text from breaking */
+
   border-bottom: 1px solid #f4f4f4;
 }
 .navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a:hover,
@@ -888,9 +890,11 @@ body > .header .logo .icon {
   padding: 15px 0px;
   margin-right: 5px;
   /* Default background and font colors */
+
   background: #00c0ef;
   color: #f9f9f9;
   /* Fallback for browsers that doesn't support rgba */
+
   color: rgba(255, 255, 255, 0.7);
 }
 .navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a > .glyphicon.danger,
@@ -2229,7 +2233,7 @@ Component: timeline
 }
 /* Nav tabs bottom */
 .tabs-bottom.nav-3 li a {
-  width: 3333.33333333% !important;
+  width: 3333.3333333333335% !important;
 }
 .tabs-bottom li a {
   border: 0;

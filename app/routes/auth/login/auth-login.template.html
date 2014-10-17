@@ -1,0 +1,14 @@
+<div class="login-container">
+    <div id="output" class='alert alert-danger' ng-show='error && !formSubmitted'>{{ error }}</div>
+    <h3>Login to BC</h3>
+    <div class="form-box">
+        <form ng-submit="login()">
+            <input name="user" type="text" placeholder="username" ng-model='username'>
+            <div class="password">
+                <input type="password" id="passwordfield" placeholder="password" ng-model='password'>
+                <span class="glyphicon glyphicon-eye-open"></span>
+            </div>
+            <button class="btn btn-info btn-block login" ng-disabled="formSubmitted" type="submit">Login</button>
+        </form>
+    </div>
+</div>
