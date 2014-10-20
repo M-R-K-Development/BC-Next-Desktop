@@ -39,6 +39,7 @@
         <script src="assets/vendors/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
         <script src="assets/specifics/login/login.js" type="text/javascript"></script>
 
+
         <!-- constants -->
         <script src='app/constants/nw.constant.js' type="text/javascript"></script>
         <script src='app/constants/api-urls.constant.js' type="text/javascript"></script>
@@ -48,11 +49,21 @@
         <script src='bower_components/angularjs/angular.js' type="text/javascript"></script>
         <script src='bower_components/angularjs/angular-route.js' type="text/javascript"></script>
 
+        <!-- persistence js -->
+        <script src="bower_components/persistence/lib/persistence.js"></script>
+        <script src="bower_components/persistence/lib/persistence.store.sql.js"></script>
+        <script src="bower_components/persistence/lib/persistence.store.websql.js"></script>
+        <script src="bower_components/persistence/lib/persistence.migrations.js"></script>
+        <script src="bower_components/persistence/lib/persistence.search.js"></script>
+
+
         <!-- todo: get ui-router working. looks a better option -->
         <!-- <script src='bower_components/angular-ui-router/release/angular-ui-router.js' type="text/javascript"></script> -->
 
         <!-- angular app -->
         <script src='app/main.js' type="text/javascript"></script>
+
+        <script src='app/migrations/main.js'></script>
 
         <!-- services -->
         <script src='app/services/state.service.js' type="text/javascript"></script>
@@ -61,10 +72,12 @@
 
         <!-- routes -->
         <script src='app/routes/main.js' type="text/javascript"></script>
+        <script src='app/routes/auth/token-check/auth-token-check.route.js' type="text/javascript"></script>
         <script src='app/routes/auth/login/auth-login.route.js' type="text/javascript"></script>
         <script src='app/routes/sites/index/sites-index.route.js' type="text/javascript"></script>
 
         <!-- controllers -->
+        <script src='app/routes/auth/token-check/auth-token-check.controller.js' type="text/javascript"></script>
         <script src='app/routes/auth/login/auth-login.controller.js' type="text/javascript"></script>
         <script src='app/routes/sites/index/sites-index.controller.js' type="text/javascript"></script>
 

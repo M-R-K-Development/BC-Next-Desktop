@@ -1,6 +1,5 @@
-app.controller('AuthLoginCtrl', ['$scope', 'Auth', 'State', '$location', function($scope, Auth, State, $location){
-
-    $scope.username, $scope.password, $scope.error;
+app.controller('AuthLoginCtrl', ['$scope', 'AuthService', 'State', '$location', 'Setting', 'MainPersistence',function($scope, AuthService, State, $location, Setting, MainPersistence){
+      $scope.username, $scope.password, $scope.error;
     $scope.formSubmitted = false;
 
     /**
@@ -13,11 +12,17 @@ app.controller('AuthLoginCtrl', ['$scope', 'Auth', 'State', '$location', functio
             $scope.error = 'Invalid Username/Password';
         } else {
             $scope.formSubmitted = true;
-            Auth.login($scope.username, $scope.password).
+            AuthService.login($scope.username, $scope.password).
                   success(function(data, status, headers, config) {
-                    console.log(data);
-
                     State.token = data.token;
+                    var setting = Setting.all().filter('name', '=', 'token').limit(1);
+                    setting.list(function(result){
+                      if(result.length == 0){
+                        s = new Setting({name: 'token', value : data.token});
+                        MainPersistence.add(s);
+                        MainPersistence.flush();
+                      }
+                    })
 
                     $scope.formSubmitted = false;
                     $location.path('/sites/index');
@@ -28,6 +33,7 @@ app.controller('AuthLoginCtrl', ['$scope', 'Auth', 'State', '$location', functio
                         } else {
                             $scope.error = 'Invalid Username/Password'
                         }
+                        console.log(data);
                         $scope.formSubmitted = false;
                   });
         }

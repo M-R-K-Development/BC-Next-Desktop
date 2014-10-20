@@ -14,15 +14,22 @@
                         <th></th>
                     </tr>
                     <tr ng-repeat='site in sites'>
-                        <td>{{ $index }}</td>
-                        <td>{{ site.name }}</td>
+                        <td>{{ ::$index }}</td>
+                        <td>{{ ::site.name }}</td>
                         <td>
-                            <span class="badge bg-green">YES</span>
+                            <span class="badge bg-green" ng-show='site.exists'>YES</span>
+                            <span class="badge bg-orange" ng-hide='site.exists'>NO</span>
                         </td>
-                        <td>04 OCT 2014</td>
-                        <td><a href="#" class="btn btn-xs btn-success">Open</a>
+                        <td>
+                            <span ng-if='site.exists'>{{ ::site.created_at | date: 'medium' }}</span>
+                            <span ng-if='!site.exists'>NEVER</span>
+                        </td>
+                        <td ng-show='site.exists'><a href="#" class="btn btn-xs btn-success">Open</a>
                             <a href="#" class="btn btn-xs btn-primary">Open And Sync</a>
                             <a href="#" class="btn btn-xs btn-danger">Full Re Sync</a>
+                        </td>
+                        <td ng-hide='site.exists'>
+                            <a href="#" class="btn btn-xs btn-default">Import</a>
                         </td>
                     </tr>
                 </tbody>

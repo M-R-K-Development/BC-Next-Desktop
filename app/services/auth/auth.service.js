@@ -1,4 +1,4 @@
-app.service('Auth', ['$http', function($http){
+app.service('AuthService', ['$http', function($http){
 
     return {
         login: function(username, password){
