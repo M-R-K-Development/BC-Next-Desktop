@@ -25,7 +25,8 @@ app.controller('SitesIndexCtrl', ['$scope', 'State', '$location', 'SiteService',
                 angular.forEach($scope.sites, function(site, i){
                         if(existingSite.id == site.id){
                             $scope.sites[i].exists = true;
-                            $scope.sites[i].created_at = existingSite.created_at;
+                            $scope.sites[i].synced_at = existingSite.synced_at;
+                            $scope.sites[i].synced = existingSite.synced;
                         }
                 });
 

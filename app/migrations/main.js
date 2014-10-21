@@ -24,7 +24,7 @@ app.factory('MainDB', ['$q',function($q){
      */
     migrate: function(){
       // sites table
-      this.connection.createTable('sites', '`id` INTEGER PRIMARY KEY, `created_at` TEXT');
+      this.connection.createTable('sites', '`id` INTEGER PRIMARY KEY, `synced_at` TEXT, `synced INTEGER DEFAULT 0`');
 
       // settings table
       this.connection.createTable('settings', '`name` TEXT PRIMARY KEY, `value` TEXT');
@@ -35,7 +35,7 @@ app.factory('MainDB', ['$q',function($q){
      * @param {[type]} site [description]
      */
     addSite : function(site){
-        this.connection.insert('sites', {id: site, created_at: new Date().toISOString()})
+        this.connection.insert('sites', {id: site})
     },
     /**
      * [sites description]

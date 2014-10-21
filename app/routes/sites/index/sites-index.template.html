@@ -17,12 +17,13 @@
                         <td>{{ ::$index }}</td>
                         <td>{{ ::site.name }}</td>
                         <td>
-                            <span class="badge bg-green" ng-show='site.exists'>YES</span>
-                            <span class="badge bg-orange" ng-hide='site.exists'>NO</span>
+                            <span class="badge bg-green" ng-show='site.synced'>YES</span>
+                            <span class="badge bg-orange" ng-show='!site.synced'>NO</span>
                         </td>
                         <td>
-                            <span ng-if='site.exists'>{{ ::site.created_at | date: 'medium' }}</span>
-                            <span ng-if='!site.exists'>NEVER</span>
+
+                            <span ng-if='site.synced'>{{ ::site.synced_at | date: 'medium' }}</span>
+                            <span ng-if='!site.synced'>NEVER</span>
                         </td>
                         <td ng-show='site.exists'><a href="javascript:void(0)" class="btn btn-xs btn-success">Open</a>
                             <a href="javascript:void(0)" class="btn btn-xs btn-primary">Open And Sync</a>
