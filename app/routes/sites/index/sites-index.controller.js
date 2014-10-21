@@ -1,4 +1,4 @@
-app.controller('SitesIndexCtrl', ['$scope', 'State', '$location', 'SiteService', 'Site', function($scope, State, $location, SiteService, Site){
+app.controller('SitesIndexCtrl', ['$scope', 'State', '$location', 'SiteService','MainDB', function($scope, State, $location, SiteService, MainDB){
 
     $scope.sites = [];
 
@@ -19,26 +19,34 @@ app.controller('SitesIndexCtrl', ['$scope', 'State', '$location', 'SiteService',
      * @return {[type]} [description]
      */
     $scope.checkExistingSites = function(){
-        var sites = Site.all();
-        var existingSites = [];
+        MainDB.sites().then(function(existingSites){
 
-        sites.list(null, function(results){
-            $scope.$apply(function(){
-                results.forEach(function(r){
-                    angular.forEach($scope.sites, function(site, i){
-                        if(r.site_id == site.id){
+            angular.forEach(existingSites, function(existingSite){
+                angular.forEach($scope.sites, function(site, i){
+                        if(existingSite.id == site.id){
                             $scope.sites[i].exists = true;
-                            $scope.sites[i].created_at = r.created;
+                            $scope.sites[i].created_at = existingSite.created_at;
                         }
-                    });
-
-
                 });
-            })
 
+            });
 
         });
 
+    }
+
+
+
+    /**
+     * Import the site
+     *
+     * @param  {[type]} index [description]
+     *
+     * @return {[type]}       [description]
+     */
+    $scope.import = function(index){
+        var site = $scope.sites[index];
+        MainDB.addSite(site.id);
     }
 
 

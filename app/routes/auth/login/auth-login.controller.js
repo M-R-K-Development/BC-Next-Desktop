@@ -1,6 +1,9 @@
-app.controller('AuthLoginCtrl', ['$scope', 'AuthService', 'State', '$location', 'Setting', 'MainPersistence',function($scope, AuthService, State, $location, Setting, MainPersistence){
+app.controller('AuthLoginCtrl', ['$scope', 'AuthService', 'State', '$location', 'MainDB',function($scope, AuthService, State, $location, MainDB){
       $scope.username, $scope.password, $scope.error;
     $scope.formSubmitted = false;
+
+    $scope.username = 'support@mrkdevelopment.com';
+    $scope.password = 'WkbZLzJEnUejgZM';
 
     /**
      * Triggers business catalyst login
@@ -15,15 +18,7 @@ app.controller('AuthLoginCtrl', ['$scope', 'AuthService', 'State', '$location', 
             AuthService.login($scope.username, $scope.password).
                   success(function(data, status, headers, config) {
                     State.token = data.token;
-                    var setting = Setting.all().filter('name', '=', 'token').limit(1);
-                    setting.list(function(result){
-                      if(result.length == 0){
-                        s = new Setting({name: 'token', value : data.token});
-                        MainPersistence.add(s);
-                        MainPersistence.flush();
-                      }
-                    })
-
+                    MainDB.setToken(data.token);
                     $scope.formSubmitted = false;
                     $location.path('/sites/index');
                   }).

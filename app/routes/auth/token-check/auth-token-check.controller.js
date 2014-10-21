@@ -1,21 +1,14 @@
-app.controller('TokenCheckCtrl', ['$scope', '$location', 'State', 'Setting', function($scope, $location, State, Setting){
+app.controller('TokenCheckCtrl', ['$scope', '$location', 'State', 'MainDB', function($scope, $location, State, MainDB){
+        MainDB.create();
+        MainDB.migrate();
 
-
-        Setting.all().filter('name', '=', 'token').limit(1).list(function(result){
-
-            if(result.length){
-                    result.forEach(function(r){
-                        $scope.$apply(function(){
-                            State.token = r.value;
-                            $location.path('/sites/index');
-                        })
-                    })
+        MainDB.getToken().then(function(token){
+            if(token == null){
+                $location.path('/auth/login');
             } else {
+                State.token = token;
+                $location.path('/sites/index');
 
-                $scope.$apply(function(){
-                    $location.path('/auth/login');
-                });
             }
-        }); //setting
-
+        })
 }])
