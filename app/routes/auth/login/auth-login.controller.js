@@ -2,9 +2,6 @@ app.controller('AuthLoginCtrl', ['$scope', 'AuthService', 'State', '$location', 
       $scope.username, $scope.password, $scope.error;
     $scope.formSubmitted = false;
 
-    $scope.username = 'support@mrkdevelopment.com';
-    $scope.password = 'WkbZLzJEnUejgZM';
-
     /**
      * Triggers business catalyst login
      *
