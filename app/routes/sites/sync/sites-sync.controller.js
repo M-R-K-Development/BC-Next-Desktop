@@ -23,6 +23,16 @@ app.controller('SitesSyncCtrl', ['$scope', '$routeParams', 'SiteDatabase', funct
     $scope.titleSyncComplete = false;
 
 
+    /**
+     * Ratings progress related field.
+     *
+     * @type {Number}
+     */
+    $scope.completedRatingTypes = 0;
+    $scope.ratingTypeSyncComplete = false;
+    $scope.totalRatingTypes;
+
+
     SiteDatabase.create($scope.siteId);
     SiteDatabase.migrate();
 }]);

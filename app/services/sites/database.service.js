@@ -26,27 +26,44 @@ app.service('SiteDatabase', [function(){
             this.customerTypeTable();
             this.industryTypeTable();
             this.leadSourceTypeTable();
+            this.ratingTypesTable();
         },
         titlesTable : function(){
             this.connection.createTable('titles', '`id` INTEGER PRIMARY KEY, `label` TEXT, `_default` TEXT');
         },
         customerTypeTable: function(){
-            this.connection.createTable('customer_types', '`id` INTEGER PRIMARY KEY, `label` TEXT');
+            this.connection.dropTable('customer_types');
+            this.connection.createTable('customer_types', '`id` INTEGER PRIMARY KEY, `label` TEXT, `_default` TEXT');
         },
         industryTypeTable: function(){
-          this.connection.createTable('industry_types', '`id` INTEGER PRIMARY KEY, `label` TEXT');
+            this.connection.dropTable('industry_types');
+          this.connection.createTable('industry_types', '`id` INTEGER PRIMARY KEY, `label` TEXT, `_default` TEXT');
         },
         leadSourceTypeTable: function(){
-          this.connection.createTable('lead_source_types', '`id` INTEGER PRIMARY KEY, `label` TEXT');
+            this.connection.dropTable('lead_source_types');
+          this.connection.createTable('lead_source_types', '`id` INTEGER PRIMARY KEY, `label` TEXT, `_default` TEXT');
+        },
+        ratingTypesTable: function(){
+          this.connection.createTable('rating_types', '`id` INTEGER PRIMARY KEY, `label` TEXT, `_default` TEXT');
         },
         clearTitles : function(){
             this.connection.destroy('titles', []);
+        },
+        clearRatingTypes : function(){
+            this.connection.destroy('rating_types', []);
         },
         addTitles : function(titles){
             var self = this;
             angular.forEach(titles, function(title){
 
                 self.connection.insert('titles', {"id": title.id, "label": title.label, "_default": title.default} );
+            });
+        },
+        addRatingTypes : function(rating_types){
+            var self = this;
+            angular.forEach(rating_types, function(rating_type){
+
+                self.connection.insert('rating_types', {"id": rating_type.id, "label": rating_type.label, "_default": rating_type.default} );
             });
         }
 

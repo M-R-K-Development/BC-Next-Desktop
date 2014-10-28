@@ -85,16 +85,17 @@
                             <span class="badge bg-green">80%</span>
                         </td>
                     </tr>
-                    <tr>
+                    <tr ng-controller="RatingTypesSyncCtrl">
                         <td>7.</td>
                         <td>Rating Types</td>
                         <td>
                             <div class="progress xs progress-striped active">
-                                <div class="progress-bar progress-bar-warning" style="width: 80%"></div>
+                                <div class="progress-bar progress-bar-warning" ng-style='progressStyle()'></div>
                             </div>
                         </td>
                         <td>
-                            <span class="badge bg-orange">80%</span>
+                            <span class="badge bg-orange">{{ percent }}%</span>
+                            <i class="fa fa-check" ng-show='completedRatingTypes == totalRatingTypes'></i>
                         </td>
                     </tr>
                     <tr ng-controller='TitleSyncCtrl'>

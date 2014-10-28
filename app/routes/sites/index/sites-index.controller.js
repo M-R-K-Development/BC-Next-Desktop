@@ -32,10 +32,6 @@ app.controller('SitesIndexCtrl', ['$scope', 'State', '$location', 'SiteService',
      */
     $scope.saveSites = function(sites){
         angular.forEach(sites, function(site, i){
-                // if(site.id == 4632){
-                //     console.log(site);
-                // }
-
             MainDB.addSite(site)
         });
 
@@ -98,6 +94,7 @@ app.controller('SitesIndexCtrl', ['$scope', 'State', '$location', 'SiteService',
             success(function(data){
                 var sites = data.items;
                 $scope.saveSites(sites);
+
 
             }).
             error(function(data){
