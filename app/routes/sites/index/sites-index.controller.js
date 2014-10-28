@@ -1,20 +1,31 @@
 app.controller('SitesIndexCtrl', ['$scope', 'State', '$location', 'SiteService','MainDB', function($scope, State, $location, SiteService, MainDB){
 
     $scope.sites = [];
+    $scope.selectedSite;
+
+
+    $scope.$watch('selectedSite', function(newValue, oldValue){
+        if(newValue){
+            State.site = $scope.selectedSite;
+        }
+    });
 
 
     //TODO:  check for internet connection
-    SiteService.list(State.token).
-        success(function(data){
-            var sites = data.items;
-            $scope.sites = data.items;
-            $scope.saveSites(sites);
-        }).
-        error(function(data){
-            console.log('error', data);
-            $location.path('/auth/login');
-        });
+    if(State.internet){
+        SiteService.list(State.token).
+            success(function(data){
+                var sites = data.items;
+                $scope.saveSites(sites);
 
+            }).
+            error(function(data){
+                console.log('error', data);
+                $location.path('/auth/login');
+            });
+    } else {
+        $scope.getSites();
+    }
 
     /**
      * Save the sites into the database.
@@ -24,13 +35,12 @@ app.controller('SitesIndexCtrl', ['$scope', 'State', '$location', 'SiteService',
      * @return {[type]}       [description]
      */
     $scope.saveSites = function(sites){
-        console.log('TOKEN', State.token);
         angular.forEach(sites, function(site, i){
-            if(site.id == 4632){
-                // console.log('SITE', site);
-                $scope.sync(i);
-            }
-            // MainDB.addSite(site)
+                // if(site.id == 4632){
+                //     console.log(site);
+                // }
+
+            MainDB.addSite(site)
         });
 
         $scope.getSites();
@@ -43,6 +53,9 @@ app.controller('SitesIndexCtrl', ['$scope', 'State', '$location', 'SiteService',
      * @return {[type]} [description]
      */
     $scope.getSites = function(){
+        MainDB.sites().then(function(sites){
+            $scope.sites = sites;
+        });
     }
 
     /**
@@ -78,8 +91,9 @@ app.controller('SitesIndexCtrl', ['$scope', 'State', '$location', 'SiteService',
      * @return {[type]}       [description]
      */
     $scope.import = function(index){
-        var site = $scope.sites[index];
-        MainDB.addSite(site.id);
+        $scope.selectedSite = $scope.sites[index];
+        $scope.selectedSite.imported = 1;
+        MainDB.markSiteImported($scope.selectedSite.id);
         $scope.reSync(index);
     }
 
@@ -90,8 +104,8 @@ app.controller('SitesIndexCtrl', ['$scope', 'State', '$location', 'SiteService',
      * @return {[type]} [description]
      */
     $scope.sync = function(index){
-        var site = $scope.sites[index];
-        $location.path('/sites/' + site.id + '/sync').search({sync: true})
+        $scope.selectedSite = $scope.sites[index];
+        $location.path('/sites/' + $scope.selectedSite.id + '/sync').search({sync: true})
     }
 
 
@@ -101,8 +115,8 @@ app.controller('SitesIndexCtrl', ['$scope', 'State', '$location', 'SiteService',
      * @return {[type]} [description]
      */
     $scope.reSync = function(index){
-        var site = $scope.sites[index];
-        $location.path('/sites/' + site.id + '/sync').search({sync: true})
+        $scope.selectedSite = $scope.sites[index];
+        $location.path('/sites/' + $scope.selectedSite.id + '/sync').search({sync: true})
     }
 
 

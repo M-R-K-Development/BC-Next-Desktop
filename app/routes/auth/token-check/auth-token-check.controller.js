@@ -2,13 +2,35 @@ app.controller('TokenCheckCtrl', ['$scope', '$location', 'State', 'MainDB', func
         MainDB.create();
         MainDB.migrate();
 
-        MainDB.getToken().then(function(token){
-            if(token == null){
-                $location.path('/auth/login');
-            } else {
-                State.token = token;
-                $location.path('/sites/index');
-
+        // check if we have an internet connection
+        var dns = require("dns");
+        dns.resolve("www.google.com", function(error){
+            if(!error){
+                State.internet = true;
+                $scope.tokenizedLogin();
             }
-        })
+            else{
+                State.internet = false;
+                $location.path('/sites/index');
+            }
+        });
+
+
+
+        /**
+         * Tokenized login
+         *
+         * @return {[type]} [description]
+         */
+        $scope.tokenizedLogin = function(){
+            MainDB.getToken().then(function(token){
+                if(token == null){
+                    $location.path('/auth/login');
+                } else {
+                    State.token = token;
+                    $location.path('/sites/index');
+
+                }
+            })
+        }
 }])

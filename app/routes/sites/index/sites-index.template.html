@@ -17,19 +17,19 @@
                         <td>{{ ::$index }}</td>
                         <td>{{ ::site.name }}</td>
                         <td>
-                            <span class="badge bg-green" ng-if='site.synced'>YES</span>
-                            <span class="badge bg-orange" ng-if='!site.synced'>NO</span>
+                            <span class="badge bg-green" ng-if='site.sync_date'>YES</span>
+                            <span class="badge bg-orange" ng-if='!site.sync_date'>NO</span>
                         </td>
                         <td>
 
-                            <span ng-if='site.synced'>{{ ::site.synced_at | date: 'medium' }}</span>
-                            <span ng-if='!site.synced'>NEVER</span>
+                            <span ng-if='site.sync_date'>{{ ::site.synced_at | date: 'medium' }}</span>
+                            <span ng-if='!site.sync_date'>NEVER</span>
                         </td>
-                        <td ng-show='site.exists'><a href="javascript:void(0)" class="btn btn-xs btn-success" ng-click='noSync($index)'>Open</a>
+                        <td ng-show='site.imported'><a href="javascript:void(0)" class="btn btn-xs btn-success" ng-click='noSync($index)'>Open</a>
                             <a href="javascript:void(0)" class="btn btn-xs btn-primary" ng-click='sync($index)'>Open And Sync</a>
                             <a href="javascript:void(0)" class="btn btn-xs btn-danger" ng-click='reSync($index)'>Full Re Sync</a>
                         </td>
-                        <td ng-hide='site.exists'>
+                        <td ng-hide='site.imported'>
                             <a href="javascript:void(0)" class="btn btn-xs btn-default" ng-click='import($index)'>Import</a>
                         </td>
                     </tr>

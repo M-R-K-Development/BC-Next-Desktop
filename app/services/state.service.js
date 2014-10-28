@@ -1,5 +1,6 @@
 app.service('State', [function(){
     return {
-        token : ""
+        token : "",
+        site: ""
     }
 }])

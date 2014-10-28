@@ -67,8 +67,8 @@ function SQLite(cfg) {
 
     db.transaction(
       function (transaction) {
-        console.log(query);
-        console.log(values, data);
+        // console.log(query);
+        // console.log(values, data);
         transaction.executeSql(query, values, data, err);
       }
     );

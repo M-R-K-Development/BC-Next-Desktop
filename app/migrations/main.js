@@ -24,18 +24,39 @@ app.factory('MainDB', ['$q',function($q){
      */
     migrate: function(){
       // sites table
-      this.connection.createTable('sites', '`id` INTEGER PRIMARY KEY, `synced_at` TEXT, `synced INTEGER DEFAULT 0`');
+      // this.connection.dropTable('sites');
+      this.connection.createTable('sites', '`id` INTEGER PRIMARY KEY, `synced_at` TEXT, `imported` INTEGER DEFAULT 0, `name` TEXT, `uri` TEXT');
 
       // settings table
       this.connection.createTable('settings', '`name` TEXT PRIMARY KEY, `value` TEXT');
     },
+
     /**
      * [addSite description]
      *
      * @param {[type]} site [description]
      */
     addSite : function(site){
-        this.connection.insert('sites', {id: site})
+        var uri;
+        angular.forEach(site.siteLinks, function(link){
+            if(link.rel == 'secureUrl'){
+                uri = link.uri;
+            }
+        });
+
+
+        var data = {id: site.id, name: site.name, uri: uri};
+        var self = this;
+
+        this.connection.select('sites', '*', 'id=' + site.id, {}, function(results){
+            if(results.rows.length){
+                self.connection.update('sites', data, 'id=' + site.id);
+            } else {
+                data.imported = 0;
+                self.connection.insert('sites', data)
+            }
+        });
+
     },
     /**
      * [sites description]
@@ -45,8 +66,9 @@ app.factory('MainDB', ['$q',function($q){
     sites : function(){
       var deferred = $q.defer();
       var sites = [];
-      this.connection.select('sites', '*', [], {}, function(results){
+      this.connection.select('sites', '*', {}, {}, function(results){
             var len = results.rows.length, i;
+
 
             for (var i = 0; i < len; i++) {
               sites.push(angular.copy(results.rows.item(i)));
@@ -58,6 +80,17 @@ app.factory('MainDB', ['$q',function($q){
 
 
       return deferred.promise;
+    },
+
+    /**
+     * Mark site as imported.
+     *
+     * @param  {[type]} siteId [description]
+     *
+     * @return {[type]}        [description]
+     */
+    markSiteImported : function(siteId){
+        this.connection.update('sites', {imported : 1}, 'id=' + siteId);
     },
     /**
      * [updateSetting description]

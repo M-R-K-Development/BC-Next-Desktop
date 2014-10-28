@@ -28,11 +28,10 @@ app.service('SiteDatabase', [function(){
             this.leadSourceTypeTable();
         },
         titlesTable : function(){
-            this.connection.dropTable('titles');
-          this.connection.createTable('titles', '`id` INTEGER PRIMARY KEY, `label` TEXT, `_default` TEXT');
+            this.connection.createTable('titles', '`id` INTEGER PRIMARY KEY, `label` TEXT, `_default` TEXT');
         },
         customerTypeTable: function(){
-          this.connection.createTable('customer_types', '`id` INTEGER PRIMARY KEY, `label` TEXT');
+            this.connection.createTable('customer_types', '`id` INTEGER PRIMARY KEY, `label` TEXT');
         },
         industryTypeTable: function(){
           this.connection.createTable('industry_types', '`id` INTEGER PRIMARY KEY, `label` TEXT');

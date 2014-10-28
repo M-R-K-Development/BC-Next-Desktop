@@ -1,6 +1,6 @@
-app.factory('TitleResource', ['$resource', function($resource){
+app.factory('TitleResource', ['$resource', 'State' , function($resource, State){
     return $resource(
-        'https://mrkdevelopment.worldsecuresystems.com/webresources/api/v3/sites/:siteId/titletypes/:id',
+        State.site.uri + 'webresources/api/v3/sites/:siteId/titletypes/:id',
         {id : '@id'},
         {
             'get':    {method:'GET'},
