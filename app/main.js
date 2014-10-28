@@ -1,1 +1,1 @@
-var app = angular.module('bcNextApp',['ngRoute']);
+var app = angular.module('bcNextApp',['ngRoute', 'ngResource']);

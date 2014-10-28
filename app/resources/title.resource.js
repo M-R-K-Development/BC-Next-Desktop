@@ -1,6 +1,6 @@
 app.factory('TitleResource', ['$resource', function($resource){
     return $resource(
-        '/webresources/api/v3/sites/current/titletypes/:id',
+        'https://mrkdevelopment.worldsecuresystems.com/webresources/api/v3/sites/:siteId/titletypes/:id',
         {id : '@id'},
         {
             'get':    {method:'GET'},
