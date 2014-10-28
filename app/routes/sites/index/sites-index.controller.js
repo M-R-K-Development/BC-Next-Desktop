@@ -11,21 +11,17 @@ app.controller('SitesIndexCtrl', ['$scope', 'State', '$location', 'SiteService',
     });
 
 
-    //TODO:  check for internet connection
-    if(State.internet){
-        SiteService.list(State.token).
-            success(function(data){
-                var sites = data.items;
-                $scope.saveSites(sites);
-
-            }).
-            error(function(data){
-                console.log('error', data);
-                $location.path('/auth/login');
-            });
-    } else {
-        $scope.getSites();
+        /**
+     * Fetch all sites from database;
+     *
+     * @return {[type]} [description]
+     */
+    $scope.getSites = function(){
+        MainDB.sites().then(function(sites){
+            $scope.sites = sites;
+        });
     }
+
 
     /**
      * Save the sites into the database.
@@ -45,43 +41,6 @@ app.controller('SitesIndexCtrl', ['$scope', 'State', '$location', 'SiteService',
 
         $scope.getSites();
     }
-
-
-    /**
-     * Fetch all sites from database;
-     *
-     * @return {[type]} [description]
-     */
-    $scope.getSites = function(){
-        MainDB.sites().then(function(sites){
-            $scope.sites = sites;
-        });
-    }
-
-    /**
-     * Check if the sites are already created.
-     *
-     * @return {[type]} [description]
-     */
-    $scope.checkExistingSites = function(){
-        MainDB.sites().then(function(existingSites){
-
-            angular.forEach(existingSites, function(existingSite){
-                angular.forEach($scope.sites, function(site, i){
-                        if(existingSite.id == site.id){
-                            $scope.sites[i].exists = true;
-                            $scope.sites[i].synced_at = existingSite.synced_at;
-                            $scope.sites[i].synced = existingSite.synced;
-                        }
-                });
-
-            });
-
-        });
-
-    }
-
-
 
     /**
      * Import the site
@@ -133,7 +92,20 @@ app.controller('SitesIndexCtrl', ['$scope', 'State', '$location', 'SiteService',
     }
 
 
+    // initialise
+    if(State.internet){
+        SiteService.list(State.token).
+            success(function(data){
+                var sites = data.items;
+                $scope.saveSites(sites);
 
+            }).
+            error(function(data){
+                $location.path('/auth/login');
+            });
+    } else {
+        $scope.getSites();
+    }
 
 
 }]); //controller

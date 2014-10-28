@@ -26,8 +26,8 @@
                             <span ng-if='!site.sync_date'>NEVER</span>
                         </td>
                         <td ng-show='site.imported'><a href="javascript:void(0)" class="btn btn-xs btn-success" ng-click='noSync($index)'>Open</a>
-                            <a href="javascript:void(0)" class="btn btn-xs btn-primary" ng-click='sync($index)'>Open And Sync</a>
-                            <a href="javascript:void(0)" class="btn btn-xs btn-danger" ng-click='reSync($index)'>Full Re Sync</a>
+                            <a href="javascript:void(0)" class="btn btn-xs btn-primary" ng-click='sync($index)' ng-disabled='!appState.internet'>Open And Sync</a>
+                            <a href="javascript:void(0)" class="btn btn-xs btn-danger" ng-click='reSync($index)' ng-disabled='!appState.internet'>Full Re Sync</a>
                         </td>
                         <td ng-hide='site.imported'>
                             <a href="javascript:void(0)" class="btn btn-xs btn-default" ng-click='import($index)'>Import</a>

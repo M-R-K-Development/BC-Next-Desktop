@@ -29,6 +29,10 @@
         <header ng-include="'app/routes/global/topnav/global-topnav.template.html'" scope="" onload="" ng-hide='true'></header>
 
         <div class="container">
+            <div class="alert alert-danger" ng-show='!appState.internet'>
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <strong>Snap!</strong> You are disconnected!!!
+            </div>
             <div ng-view></div>
         </div>
 

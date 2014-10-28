@@ -4,14 +4,16 @@ app.controller('TokenCheckCtrl', ['$scope', '$location', 'State', 'MainDB', func
 
         // check if we have an internet connection
         var dns = require("dns");
-        dns.resolve("www.google.com", function(error){
+        dns.resolve("google.com", function(error){
             if(!error){
                 State.internet = true;
                 $scope.tokenizedLogin();
             }
             else{
-                State.internet = false;
-                $location.path('/sites/index');
+                $scope.$apply(function(){
+                    State.internet = false;
+                    $location.path('/sites/index');
+                });
             }
         });
 
