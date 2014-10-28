@@ -27,6 +27,7 @@ app.service('SiteDatabase', [function(){
             this.industryTypeTable();
             this.leadSourceTypeTable();
             this.ratingTypesTable();
+            this.orderStatusesTable();
         },
         titlesTable : function(){
             this.connection.createTable('titles', '`id` INTEGER PRIMARY KEY, `label` TEXT, `_default` TEXT');
@@ -46,11 +47,18 @@ app.service('SiteDatabase', [function(){
         ratingTypesTable: function(){
           this.connection.createTable('rating_types', '`id` INTEGER PRIMARY KEY, `label` TEXT, `_default` TEXT');
         },
+        orderStatusesTable : function(){
+          this.connection.createTable('order_statuses', '`id` INTEGER PRIMARY KEY, `label` TEXT, `_default` TEXT, `notify_customer` TEXT, `site_notification_id` INTEGER');
+
+        },
         clearTitles : function(){
             this.connection.destroy('titles', []);
         },
         clearRatingTypes : function(){
             this.connection.destroy('rating_types', []);
+        },
+        clearOrderStatusTypes : function(){
+            this.connection.destroy('order_statuses', []);
         },
         addTitles : function(titles){
             var self = this;
@@ -64,6 +72,13 @@ app.service('SiteDatabase', [function(){
             angular.forEach(rating_types, function(rating_type){
 
                 self.connection.insert('rating_types', {"id": rating_type.id, "label": rating_type.label, "_default": rating_type.default} );
+            });
+        },
+        addOrderStatusTypes : function(order_status_types){
+            var self = this;
+            angular.forEach(order_status_types, function(order_status_type){
+
+                self.connection.insert('order_statuses', {"id": order_status_type.id, "label": order_status_type.label, "_default": order_status_type.default, notify_customer: order_status_type.notifyCustomer, site_notification_id: order_status_type.siteNotificationId} );
             });
         }
 

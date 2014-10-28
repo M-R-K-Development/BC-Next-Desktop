@@ -32,6 +32,15 @@ app.controller('SitesSyncCtrl', ['$scope', '$routeParams', 'SiteDatabase', funct
     $scope.ratingTypeSyncComplete = false;
     $scope.totalRatingTypes;
 
+    /**
+     * Order status related progress fields
+     *
+     * @type {Number}
+     */
+    $scope.completedOrderStatusTypes = 0;
+    $scope.orderStatusTypeSyncComplete = false;
+    $scope.totalOrderStatusTypes;
+
 
     SiteDatabase.create($scope.siteId);
     SiteDatabase.migrate();

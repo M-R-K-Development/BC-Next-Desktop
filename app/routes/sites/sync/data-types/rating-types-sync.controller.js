@@ -26,9 +26,9 @@ app.controller('RatingTypesSyncCtrl', ['$scope', 'RatingTypesResource', 'SiteDat
         }
 
         if($scope.completedRatingTypes != $scope.totalRatingTypes){
-            $scope.syncTitles($scope.completedRatingTypes);
+            $scope.syncRatingTypes($scope.completedRatingTypes);
         } else {
-            $scope.titleSyncComplete = true;
+            $scope.ratingTypeSyncComplete = true;
         }
     });
 
@@ -40,7 +40,7 @@ app.controller('RatingTypesSyncCtrl', ['$scope', 'RatingTypesResource', 'SiteDat
      *
      * @return {[type]}      [description]
      */
-    $scope.syncTitles = function(skip){
+    $scope.syncRatingTypes = function(skip){
          RatingTypesResource.get({siteId: $scope.siteId, skip: skip, limit: 4}).$promise
             .then(function(response){
                 $scope.totalRatingTypes = response.totalItemsCount;

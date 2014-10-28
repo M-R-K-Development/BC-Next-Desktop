@@ -73,16 +73,17 @@
                             <span class="badge bg-green">40%</span>
                         </td>
                     </tr>
-                    <tr>
+                    <tr ng-controller="OrderStatusTypesSyncCtrl">
                         <td>6.</td>
                         <td>Order Statuses</td>
                         <td>
                             <div class="progress xs progress-striped active">
-                                <div class="progress-bar progress-bar-success" style="width: 80%"></div>
+                                <div class="progress-bar progress-bar-success" ng-style="progressStyle()"></div>
                             </div>
                         </td>
                         <td>
-                            <span class="badge bg-green">80%</span>
+                            <span class="badge bg-green">{{ percent }}%</span>
+                            <i class="fa fa-check" ng-show='completedOrderStatusTypes == totalOrderStatusTypes'></i>
                         </td>
                     </tr>
                     <tr ng-controller="RatingTypesSyncCtrl">
