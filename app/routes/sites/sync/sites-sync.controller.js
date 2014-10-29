@@ -62,9 +62,25 @@ app.controller('SitesSyncCtrl', ['$scope', '$routeParams', 'SiteDatabase', funct
     $scope.totalCustomerTypes;
 
 
+    /**
+     * Industry type related fields
+     *
+     * @type {Number}
+     */
     $scope.completedIndustryTypes = 0;
     $scope.industryTypesSyncComplete = false;
     $scope.totalIndustryTypes;
+
+
+    /**
+     * Customer related sync
+     *
+     * @type {Number}
+     */
+    $scope.completedCustomers = 0;
+    $scope.customerSyncComplete = false;
+    $scope.totalCustomers;
+
 
 
     SiteDatabase.create($scope.siteId);

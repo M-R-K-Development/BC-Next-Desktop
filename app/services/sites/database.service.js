@@ -28,6 +28,17 @@ app.service('SiteDatabase', [function(){
             this.leadSourceTypeTable();
             this.ratingTypesTable();
             this.orderStatusesTable();
+
+            this.customersTable();
+            this.ordersTable();
+
+        },
+        customersTable : function(){
+            this.connection.createTable('customers', '`id` INTEGER PRIMARY KEY, `customerTypeId` INTEGER, `leadSourceTypeId` INTEGER, `ratingTypeId` INTEGER,  `titleTypeId` INTEGER, `firstName` TEXT, `middleName` TEXT, `lastName` TEXT, `company` TEXT, `username` TEXT');
+
+        },
+        ordersTable : function(){
+
         },
         titlesTable : function(){
             this.connection.createTable('titles', '`id` INTEGER PRIMARY KEY, `label` TEXT, `_default` TEXT');
@@ -50,6 +61,9 @@ app.service('SiteDatabase', [function(){
         },
         clearTitles : function(){
             this.connection.destroy('titles', []);
+        },
+        clearCustomers : function(){
+            this.connection.destroy('customers', []);
         },
         clearLeadSources : function(){
             this.connection.destroy('lead_source_types', []);
@@ -106,6 +120,23 @@ app.service('SiteDatabase', [function(){
             angular.forEach(order_status_types, function(order_status_type){
 
                 self.connection.insert('order_statuses', {"id": order_status_type.id, "label": order_status_type.label, "_default": order_status_type.default, notify_customer: order_status_type.notifyCustomer, site_notification_id: order_status_type.siteNotificationId} );
+            });
+        },
+        saveCustomers : function (customers){
+            var self = this;
+            angular.forEach(customers, function(c){
+                var customer = {id: c.id, customerTypeId: c.customerTypeId, leadSourceTypeId: c.leadSourceTypeId, ratingTypeId : c.ratingTypeId, titleTypeId: c.titleTypeId, firstName: c.firstName, middleName : c.middleName, lastName: c.lastName, company : c.company, username: c.username};
+                self.saveCustomer(customer);
+            });
+        },
+        saveCustomer : function(customer){
+            var self = this;
+            this.connection.select('customers', '*', 'id=' + customer.id, {limit: 1}, function(results){
+                if(results.rows.length){
+                    self.connection.update('customers', customer, 'id=' + customer.id);
+                } else {
+                    self.connection.insert('customers', customer)
+                }
             });
         }
 

@@ -71,7 +71,7 @@ app.controller('SitesIndexCtrl', ['$scope', 'State', '$location', 'SiteService',
      */
     $scope.reSync = function(index){
         $scope.selectedSite = $scope.sites[index];
-        $location.path('/sites/' + $scope.selectedSite.id + '/sync').search({sync: true})
+        $location.path('/sites/' + $scope.selectedSite.id + '/sync').search({resync: true})
     }
 
 
