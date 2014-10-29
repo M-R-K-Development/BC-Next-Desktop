@@ -33,15 +33,12 @@ app.service('SiteDatabase', [function(){
             this.connection.createTable('titles', '`id` INTEGER PRIMARY KEY, `label` TEXT, `_default` TEXT');
         },
         customerTypeTable: function(){
-            this.connection.dropTable('customer_types');
             this.connection.createTable('customer_types', '`id` INTEGER PRIMARY KEY, `label` TEXT, `_default` TEXT');
         },
         industryTypeTable: function(){
-            this.connection.dropTable('industry_types');
           this.connection.createTable('industry_types', '`id` INTEGER PRIMARY KEY, `label` TEXT, `_default` TEXT');
         },
         leadSourceTypeTable: function(){
-            this.connection.dropTable('lead_source_types');
           this.connection.createTable('lead_source_types', '`id` INTEGER PRIMARY KEY, `label` TEXT, `_default` TEXT');
         },
         ratingTypesTable: function(){
@@ -54,6 +51,15 @@ app.service('SiteDatabase', [function(){
         clearTitles : function(){
             this.connection.destroy('titles', []);
         },
+        clearLeadSources : function(){
+            this.connection.destroy('lead_source_types', []);
+        },
+        clearIndustryTypes : function(){
+            this.connection.destroy('industry_types', []);
+        },
+        clearCustomerTypes : function(){
+            this.connection.destroy('customer_types', []);
+        },
         clearRatingTypes : function(){
             this.connection.destroy('rating_types', []);
         },
@@ -65,6 +71,27 @@ app.service('SiteDatabase', [function(){
             angular.forEach(titles, function(title){
 
                 self.connection.insert('titles', {"id": title.id, "label": title.label, "_default": title.default} );
+            });
+        },
+        addLeadSources : function(lead_source_types){
+            var self = this;
+            angular.forEach(lead_source_types, function(lead_source_type){
+
+                self.connection.insert('lead_source_types', {"id": lead_source_type.id, "label": lead_source_type.label, "_default": lead_source_type.default} );
+            });
+        },
+        addCustomerTypes : function(customer_types){
+            var self = this;
+            angular.forEach(customer_types, function(customer_type){
+
+                self.connection.insert('customer_types', {"id": customer_type.id, "label": customer_type.label, "_default": customer_type.default} );
+            });
+        },
+        addIndustryTypes : function(industry_types){
+            var self = this;
+            angular.forEach(industry_types, function(industry_type){
+
+                self.connection.insert('industry_types', {"id": industry_type.id, "label": industry_type.label, "_default": industry_type.default} );
             });
         },
         addRatingTypes : function(rating_types){

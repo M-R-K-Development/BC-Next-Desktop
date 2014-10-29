@@ -1,6 +1,6 @@
-app.factory('LeadSourceType', ['$resource', function($resource){
+app.factory('LeadSourceType', ['$resource', 'State', function($resource, State){
     return $resource(
-        '/webresources/api/v3/sites/current/leadsourcetypes/:id',
+        State.site.uri + 'webresources/api/v3/sites/:siteId/leadsourcetypes/:id',
         {id : '@id'},
         {
             'get':    {method:'GET'},

@@ -1,6 +1,6 @@
-app.factory('CustomerTypeResource', ['$resource', function($resource){
+app.factory('CustomerTypeResource', ['$resource' ,'State', function($resource, State){
     return $resource(
-        '/webresources/api/v3/sites/current/customertypes/:id',
+        State.site.uri + 'webresources/api/v3/sites/:siteId/customertypes/:id',
         {id : '@id'},
         {
             'get':    {method:'GET'},

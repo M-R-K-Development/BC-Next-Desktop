@@ -1,6 +1,6 @@
-app.factory('IndustryTypeResource', ['$resource', function($resource){
+app.factory('IndustryTypeResource', ['$resource', 'State', function($resource, State){
     return $resource(
-        '/webresources/api/v3/sites/current/industrytypes/:id',
+        State.site.uri + 'webresources/api/v3/sites/:siteId/industrytypes/:id',
         {id : '@id'},
         {
             'get':    {method:'GET'},

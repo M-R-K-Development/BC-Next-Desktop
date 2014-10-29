@@ -42,6 +42,31 @@ app.controller('SitesSyncCtrl', ['$scope', '$routeParams', 'SiteDatabase', funct
     $scope.totalOrderStatusTypes;
 
 
+    /**
+     * lead source related progress fields
+     *
+     * @type {Number}
+     */
+    $scope.completedLeadSources = 0;
+    $scope.leadSourceSyncComplete = false;
+    $scope.totalLeadSources;
+
+
+    /**
+     * Customer types related progress fields.
+     *
+     * @type {Number}
+     */
+    $scope.completedCustomerTypes = 0;
+    $scope.customerTypeSyncComplete = false;
+    $scope.totalCustomerTypes;
+
+
+    $scope.completedIndustryTypes = 0;
+    $scope.industryTypesSyncComplete = false;
+    $scope.totalIndustryTypes;
+
+
     SiteDatabase.create($scope.siteId);
     SiteDatabase.migrate();
 }]);

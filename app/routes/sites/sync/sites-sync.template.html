@@ -25,40 +25,43 @@
                             <span class="badge bg-red">20%</span>
                         </td>
                     </tr>
-                    <tr>
+                    <tr ng-controller='CustomerTypeSyncCtrl'>
                         <td>2.</td>
                         <td>Customer Types</td>
                         <td>
                             <div class="progress xs progress-striped active">
-                                <div class="progress-bar progress-bar-primary" style="width: 80%"></div>
+                                <div class="progress-bar progress-bar-primary" ng-style='progressStyle()'></div>
                             </div>
                         </td>
                         <td>
-                            <span class="badge bg-blue">80%</span>
+                            <span class="badge bg-blue">{{ percent }}%</span>
+                            <i class="fa fa-check" ng-show='completedCustomerTypes == totalCustomerTypes'></i>
                         </td>
                     </tr>
-                    <tr>
+                    <tr ng-controller="IndustryTypeSyncCtrl">
                         <td>3.</td>
                         <td>Industry Types</td>
                         <td>
                             <div class="progress xs progress-striped active">
-                                <div class="progress-bar progress-bar-primary" style="width: 70%"></div>
+                                <div class="progress-bar progress-bar-primary" ng-style='progressStyle()'></div>
                             </div>
                         </td>
                         <td>
-                            <span class="badge bg-blue">70%</span>
+                            <span class="badge bg-blue">{{ percent }}%</span>
+                            <i class="fa fa-check" ng-show='completedIndustryTypes == totalIndustryTypes'></i>
                         </td>
                     </tr>
-                    <tr>
+                    <tr ng-controller="LeadSourceSyncCtrl">
                         <td>4.</td>
                         <td>Lead Source Types</td>
                         <td>
                             <div class="progress xs progress-striped active">
-                                <div class="progress-bar progress-bar-primary" style="width: 60%"></div>
+                                <div class="progress-bar progress-bar-primary" ng-style="progressStyle()"></div>
                             </div>
                         </td>
                         <td>
-                            <span class="badge bg-blue">60%</span>
+                            <span class="badge bg-blue">{{ percent }}%</span>
+                            <i class="fa fa-check" ng-show='completedLeadSources == totalLeadSources'></i>
                         </td>
                     </tr>
                     <tr>

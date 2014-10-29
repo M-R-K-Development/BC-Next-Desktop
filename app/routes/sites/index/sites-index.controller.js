@@ -95,7 +95,6 @@ app.controller('SitesIndexCtrl', ['$scope', 'State', '$location', 'SiteService',
                 var sites = data.items;
                 $scope.saveSites(sites);
 
-
             }).
             error(function(data){
                 $location.path('/auth/login');
