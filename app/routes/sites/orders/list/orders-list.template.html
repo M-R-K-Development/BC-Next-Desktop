@@ -1,0 +1,104 @@
+<div class="wrapper row-offcanvas row-offcanvas-left">
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="left-side sidebar-offcanvas">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <!-- Sidebar user panel -->
+            <div class="user-panel">
+                <div class="pull-left info">
+                    <p>Site Name</p>
+                    <a href="#"><i class="fa fa-circle text-success"></i> Sync Status</a>
+                </div>
+            </div>
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul class="sidebar-menu">
+                <li>
+                    <a href="#">
+                        <i class="fa fa-users"></i>
+                        <span>Contacts</span>
+                    </a>
+                </li>
+                <li class='active'>
+                    <a href="#">
+                        <i class="fa fa-shopping-cart"></i>
+                        <span>Orders</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-bar-chart-o"></i>
+                        <span>Reports</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-table"></i>
+                        <span>Data Manager</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+    <aside class="right-side">
+        <section class="content-header">
+            <h1>Customers</h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Site List</a>
+                </li>
+                <li class="active">Customers Listing</li>
+            </ol>
+        </section>
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <!--DATA TABLE -->
+                    <div class="box">
+                        <div class="box-body table-responsive">
+                            <div id="example2_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                                <div class="row">
+                                    <div class="col-xs-6"></div>
+                                    <div class="col-xs-6"></div>
+                                </div>
+                                <table id="example2" class="table table-bordered table-hover dataTable" aria-describedby="example2_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Title</th>
+                                            <th class="sorting_asc" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">Name</th>
+                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Customer Type</th>
+                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Lead Source</th>
+                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Rating Type</th>
+                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Company</th>
+                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Username</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                        <tr ng-class="{ 'odd' : ($index % 2) == 1, 'even' : ($index % 2) == 0 }" ng-repeat="customer in customers">
+                                            <td class=" ">{{ getType(customer.titleTypeId, titles) }}</td>
+                                            <td class=" sorting_1">{{ customer.firstName }}<span ng-if='customer.middleName.length'> {{ customer.middleName }} </span> {{ customer.lastName }}</td>
+                                            <td class=" ">{{ getType(customer.customerTypeId, customerTypes) }}</td>
+                                            <td class=" ">{{ getType(customer.leadSourceTypeId, leadSourceTypes) }}</td>
+                                            <td class=" ">{{ getType(customer.ratingTypeId, ratingTypes) }}</td>
+                                            <td>{{ customer.company }}</td>
+                                            <td>{{ customer.username }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="row">
+                                    <div class="col-xs-12 text-center">
+                                        <div class="dataTables_paginate paging_bootstrap">
+                                            <pagination total-items="totalOrders" ng-model="currentPage" max-size='10' items-per-page='limit' boundary-links='true'></pagination>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--END DATA TABLE-->
+                </div>
+            </div>
+        </section>
+    </aside>
+</div>

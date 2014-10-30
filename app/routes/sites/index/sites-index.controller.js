@@ -85,8 +85,8 @@ app.controller('SitesIndexCtrl', ['$scope', 'State', '$location', 'SiteService',
      * @return {[type]}       [description]
      */
     $scope.noSync = function(index){
-        var site = $scope.sites[index];
-        $location.path('/sites/' + site.id + '/customers/index');
+        $scope.selectedSite = $scope.sites[index];
+        $location.path('/sites/' + $scope.selectedSite.id + '/customers/list');
     }
 
 

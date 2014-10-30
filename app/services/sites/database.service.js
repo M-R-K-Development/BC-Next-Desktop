@@ -1,4 +1,4 @@
-app.service('SiteDatabase', [function(){
+app.service('SiteDatabase', ['$q', 'State', function($q, State){
     return {
         site: "",
         /**
@@ -12,9 +12,17 @@ app.service('SiteDatabase', [function(){
          *
          * @return {[type]} [description]
          */
-        create: function(site){
+        init: function(site){
           this.site = site;
           this.connection = SQLite({ shortName: site, displayName: site + ' database', maxSize: 500 * 1024 * 1024 });
+        },
+        getConnection: function(){
+            if(!this.connection.length){
+                this.connection = SQLite({ shortName: State.site.id, displayName: State.site.id + ' database', maxSize: 500 * 1024 * 1024 });
+                return this.connection;
+            }
+
+            return this.connection;
         },
         /**
          * created the required database;
@@ -202,6 +210,112 @@ app.service('SiteDatabase', [function(){
                     self.connection.insert('orders', order)
                 }
             });
+        },
+        getCustomers : function(conditions, options){
+            var deferred = $q.defer();
+            var self = this;
+            var count = 0;
+
+            this.connection.select('customers', '*', conditions, options, function(results){
+                var len = results.rows.length, i;
+                var customers = [];
+                for (var i = 0; i < len; i++) {
+                    customers.push(angular.copy(results.rows.item(i)))
+                };
+                deferred.resolve(customers);
+            });
+
+            return deferred.promise;
+        },
+        getCustomerCount : function(conditions){
+            var deferred = $q.defer();
+            this.connection.select('customers', 'count(*) as count', conditions, {}, function(results){
+                var result = angular.copy(results.rows.item(0));
+                deferred.resolve(angular.copy(result['count']));
+            });
+
+            return deferred.promise;
+        },
+        getOrders : function(conditions, options){
+            var deferred = $q.defer();
+            var self = this;
+            var count = 0;
+
+            this.connection.select('orders', '*', conditions, options, function(results){
+                var len = results.rows.length, i;
+                var orders = [];
+                for (var i = 0; i < len; i++) {
+                    orders.push(angular.copy(results.rows.item(i)))
+                };
+                deferred.resolve(orders);
+            });
+
+            return deferred.promise;
+        },
+        getOrderCount : function(conditions){
+            var deferred = $q.defer();
+            this.connection.select('orders', 'count(*) as count', conditions, {}, function(results){
+                var result = angular.copy(results.rows.item(0));
+                deferred.resolve(angular.copy(result['count']));
+            });
+
+            return deferred.promise;
+        },
+        getTitles: function(){
+            var deferred = $q.defer();
+
+            this.connection.select('titles', '*', [], {}, function(results){
+                var len = results.rows.length, i;
+                var items = [];
+                for (var i = 0; i < len; i++) {
+                    items.push(angular.copy(results.rows.item(i)))
+                };
+                deferred.resolve(items);
+            });
+            return deferred.promise;
+
+        },
+        getCustomerTypes: function(){
+            var deferred = $q.defer();
+
+            this.connection.select('customer_types', '*', [], {}, function(results){
+                var len = results.rows.length, i;
+                var items = [];
+                for (var i = 0; i < len; i++) {
+                    items.push(angular.copy(results.rows.item(i)))
+                };
+                deferred.resolve(items);
+            });
+            return deferred.promise;
+
+        },
+        getLeadSourceTypes: function(){
+            var deferred = $q.defer();
+
+            this.connection.select('lead_source_types', '*', [], {}, function(results){
+                var len = results.rows.length, i;
+                var items = [];
+                for (var i = 0; i < len; i++) {
+                    items.push(angular.copy(results.rows.item(i)))
+                };
+                deferred.resolve(items);
+            });
+            return deferred.promise;
+
+        },
+        getRatingTypes: function(){
+            var deferred = $q.defer();
+
+            this.connection.select('rating_types', '*', [], {}, function(results){
+                var len = results.rows.length, i;
+                var items = [];
+                for (var i = 0; i < len; i++) {
+                    items.push(angular.copy(results.rows.item(i)))
+                };
+                deferred.resolve(items);
+            });
+            return deferred.promise;
+
         }
 
     }

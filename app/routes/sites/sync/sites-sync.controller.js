@@ -92,6 +92,6 @@ app.controller('SitesSyncCtrl', ['$scope', '$routeParams', 'SiteDatabase', funct
 
 
 
-    SiteDatabase.create($scope.siteId);
+    SiteDatabase.init($scope.siteId);
     SiteDatabase.migrate();
 }]);
