@@ -1,6 +1,7 @@
 app.controller('AuthLoginCtrl', ['$scope', 'AuthService', 'State', '$location', 'MainDB',function($scope, AuthService, State, $location, MainDB){
-      $scope.username, $scope.password, $scope.error;
+    $scope.username, $scope.password, $scope.error;
     $scope.formSubmitted = false;
+    State.token = '';
 
     /**
      * Triggers business catalyst login

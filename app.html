@@ -26,9 +26,9 @@
     </head>
     <body class="skin-blue" ng-app='bcNextApp'>
         <!-- TODO: get top nav to show hide depending on the states -->
-        <header ng-include="'app/routes/global/topnav/global-topnav.template.html'" scope="" onload="" ng-hide='true'></header>
+        <header ng-include="'app/routes/global/topnav/global-topnav.template.html'" ng-show='appState.token.length' class='header'></header>
 
-        <div class="container">
+        <div class="row-fluid">
             <div class="alert alert-danger" ng-show='!appState.internet'>
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                 <strong>Snap!</strong> You are disconnected!!!
