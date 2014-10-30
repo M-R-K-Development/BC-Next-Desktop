@@ -81,6 +81,15 @@ app.controller('SitesSyncCtrl', ['$scope', '$routeParams', 'SiteDatabase', funct
     $scope.customerSyncComplete = false;
     $scope.totalCustomers;
 
+    /**
+     * Order related sync
+     *
+     * @type {Number}
+     */
+    $scope.completedOrders = 0;
+    $scope.orderSyncComplete = false;
+    $scope.totalOrders;
+
 
 
     SiteDatabase.create($scope.siteId);

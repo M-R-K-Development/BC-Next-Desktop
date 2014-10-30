@@ -38,7 +38,7 @@ app.service('SiteDatabase', [function(){
 
         },
         ordersTable : function(){
-
+            this.connection.createTable('orders', 'id INTEGER PRIMARY KEY, entityId INTEGER, categoryId INTEGER, statusTypeId INTEGER, discountCodeId INTEGER, name TEXT, userIdAssignedTo INTEGER, countryCode TEXT, paymentMethodTypeId INTEGER, shippingPrice INTEGER, shippingTaxRate INTEGER, discountRate INTEGER, taxCodeId INTEGER, giftVoucherId INTEGER, giftVoucherAmount INTEGER, totalPrice INTEGER, shippingDescription TEXT, shippingOption INTEGER, shippingAttention TEXT, shippingInstructions TEXT, quote TEXT, invoiced TEXT, invoiceNumber TEXT, invoiceDate TEXT, recur TEXT, nextInvoiceDate TEXT, endRecurDate TEXT, cycleTypeID INTEGER, directDebitTypeId INTEGER, directDebitDays INTEGER, directDebitProcessed TEXT, ownBy INTEGER, ownByDate TEXT, deleted TEXT, integrationId INTEGER, parentId INTEGER, destinationAddressIsResidential TEXT, isIntermediate TEXT, shippingRateKey TEXT');
         },
         titlesTable : function(){
             this.connection.createTable('titles', '`id` INTEGER PRIMARY KEY, `label` TEXT, `_default` TEXT');
@@ -64,6 +64,9 @@ app.service('SiteDatabase', [function(){
         },
         clearCustomers : function(){
             this.connection.destroy('customers', []);
+        },
+        clearOrders : function(){
+            this.connection.destroy('orders', []);
         },
         clearLeadSources : function(){
             this.connection.destroy('lead_source_types', []);
@@ -133,9 +136,70 @@ app.service('SiteDatabase', [function(){
             var self = this;
             this.connection.select('customers', '*', 'id=' + customer.id, {limit: 1}, function(results){
                 if(results.rows.length){
-                    self.connection.update('customers', customer, 'id=' + customer.id);
+                    var id = customer.id;
+                    delete customer.id;
+                    self.connection.update('customers', customer, 'id=' + id);
                 } else {
                     self.connection.insert('customers', customer)
+                }
+            });
+        },
+        saveOrders : function (orders){
+            var self = this;
+            angular.forEach(orders, function(o){
+                var order = {
+                    id: o.id,
+                    entityId: o.entityId,
+                    categoryId: o.categoryId,
+                    statusTypeId: o.statusTypeId,
+                    discountCodeId: o.discountCodeId,
+                    name: o.name,
+                    userIdAssignedTo: o.userIdAssignedTo,
+                    countryCode: o.countryCode,
+                    paymentMethodTypeId: o.paymentMethodTypeId,
+                    shippingPrice: o.shippingPrice,
+                    shippingTaxRate: o.shippingTaxRate,
+                    discountRate: o.discountRate,
+                    taxCodeId: o.taxCodeId,
+                    giftVoucherId: o.giftVoucherId,
+                    giftVoucherAmount: o.giftVoucherAmount,
+                    totalPrice: o.totalPrice,
+                    shippingDescription: o.shippingDescription,
+                    shippingOption: o.shippingOption,
+                    shippingAttention: o.shippingAttention,
+                    shippingInstructions: o.shippingInstructions,
+                    quote: o.quote,
+                    invoiced: o.invoiced,
+                    invoiceNumber: o.invoiceNumber,
+                    invoiceDate: o.invoiceDate,
+                    recur: o.recur,
+                    nextInvoiceDate: o.nextInvoiceDate,
+                    endRecurDate: o.endRecurDate,
+                    cycleTypeID: o.cycleTypeID,
+                    directDebitTypeId: o.directDebitTypeId,
+                    directDebitDays: o.directDebitDays,
+                    directDebitProcessed: o.directDebitProcessed,
+                    ownBy: o.ownBy,
+                    ownByDate: o.ownByDate,
+                    deleted: o.deleted,
+                    integrationId: o.integrationId,
+                    parentId: o.parentId,
+                    destinationAddressIsResidential: o.destinationAddressIsResidential,
+                    isIntermediate: o.isIntermediate,
+                    shippingRateKey: o.shippingRateKey
+                };
+                self.saveOrder(order);
+            });
+        },
+        saveOrder : function(order){
+            var self = this;
+            this.connection.select('orders', '*', 'id=' + order.id, {limit: 1}, function(results){
+                if(results.rows.length){
+                    var id = order.id;
+                    delete order.id;
+                    self.connection.update('orders', order, 'id=' + id);
+                } else {
+                    self.connection.insert('orders', order)
                 }
             });
         }
