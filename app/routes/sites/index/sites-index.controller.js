@@ -1,4 +1,4 @@
-app.controller('SitesIndexCtrl', ['$scope', 'State', '$location', 'SiteService','MainDB', function($scope, State, $location, SiteService, MainDB){
+app.controller('SitesIndexCtrl', ['$scope', 'State', '$location', 'SiteService','MainDB', '$modal', function($scope, State, $location, SiteService, MainDB, $modal){
 
     $scope.sites = [];
     $scope.selectedSite;
@@ -60,7 +60,8 @@ app.controller('SitesIndexCtrl', ['$scope', 'State', '$location', 'SiteService',
      */
     $scope.sync = function(index){
         $scope.selectedSite = $scope.sites[index];
-        $location.path('/sites/' + $scope.selectedSite.id + '/sync').search({sync: true})
+        $scope.tokenInputModal({sync:true});
+        // $location.path('/sites/' + $scope.selectedSite.id + '/sync').search({sync: true})
     }
 
 
@@ -71,7 +72,8 @@ app.controller('SitesIndexCtrl', ['$scope', 'State', '$location', 'SiteService',
      */
     $scope.reSync = function(index){
         $scope.selectedSite = $scope.sites[index];
-        $location.path('/sites/' + $scope.selectedSite.id + '/sync').search({resync: true})
+        $scope.tokenInputModal({resync: true})
+        // $location.path('/sites/' + $scope.selectedSite.id + '/sync').search({resync: true})
     }
 
 
@@ -88,13 +90,38 @@ app.controller('SitesIndexCtrl', ['$scope', 'State', '$location', 'SiteService',
     }
 
 
+
+    /**
+     * Bring up a modal for token input.
+     *
+     * This is a temporary work around as v3 api hasn't implemented
+     * external oauth workflow.
+     *
+     * @param  {[type]} searchOptions [description]
+     *
+     * @return {[type]}               [description]
+     */
+    $scope.tokenInputModal = function(searchOptions){
+        var modalInstance = $modal.open({
+            templateUrl: 'token-input.html',
+            controller: 'TokenInputModalCtrl',
+            size: 'md',
+            resolve: {
+            }
+        });
+        modalInstance.result.then(function(token) {
+            State.token = token;
+            $location.path('/sites/' + $scope.selectedSite.id + '/sync').search(searchOptions)
+        });
+    }
+
+
     // initialise
     if(State.internet){
         SiteService.list(State.token).
             success(function(data){
                 var sites = data.items;
                 $scope.saveSites(sites);
-
             }).
             error(function(data){
                 $location.path('/auth/login');
@@ -105,3 +132,34 @@ app.controller('SitesIndexCtrl', ['$scope', 'State', '$location', 'SiteService',
 
 
 }]); //controller
+
+
+// token input modal controller.
+// temporary workaround.
+// delete after oauth is working
+app.controller('TokenInputModalCtrl', ['$scope', '$modalInstance', function($scope, $modalInstance){
+    /**
+     * Token model.
+     */
+    $scope.token;
+
+    /**
+     * Process once the token is inputted and next button entered.
+     *
+     * @return {[type]} [description]
+     */
+    $scope.next = function(){
+        $modalInstance.close($scope.token);
+    }
+
+
+    /**
+     * Close modal without any token input.
+     *
+     * @return {[type]} [description]
+     */
+    $scope.cancel = function(){
+        $modalInstance.dismiss('cancel');
+    }
+
+}])
