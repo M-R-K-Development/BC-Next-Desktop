@@ -2,6 +2,7 @@ app.controller('SitesIndexCtrl', ['$scope', 'State', '$location', 'SiteService',
 
     $scope.sites = [];
     $scope.selectedSite;
+    $scope.siteIds = [];
 
 
     $scope.$watch('selectedSite', function(newValue, oldValue){
@@ -122,8 +123,11 @@ app.controller('SitesIndexCtrl', ['$scope', 'State', '$location', 'SiteService',
             State.token = token;
             SiteService.list(State.token).
                 success(function(data){
-                    var sites = data.items;
-                    $scope.saveSites(sites);
+                    angular.forEach(data.items, function(item){
+                        $scope.siteIds.push(item.id);
+                    });
+
+                    $scope.saveSites(data.items);
                 }).
                 error(function(data){
                     $location.path('/auth/login');

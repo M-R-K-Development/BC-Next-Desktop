@@ -6,13 +6,14 @@
  *
  * @return {[type]}              [description]
  */
-app.controller('SitesSyncCtrl', ['$scope', '$routeParams', 'SiteDatabase', function($scope, $routeParams, SiteDatabase){
+app.controller('SitesSyncCtrl', ['$scope', '$routeParams', 'SiteDatabase', '$location', '$timeout', 'MainDB', function($scope, $routeParams, SiteDatabase, $location, $timeout, MainDB){
     /**
      * Site ID
      *
      * @type {[type]}
      */
     $scope.siteId = $routeParams.id;
+    $scope.synced = false;
 
     /**
      * Title progress related fields
@@ -91,13 +92,27 @@ app.controller('SitesSyncCtrl', ['$scope', '$routeParams', 'SiteDatabase', funct
 
 
 
+    $scope.$watch('synced', function(newValue, oldValue){
+        if(newValue){
+            // save timestamp and update flag for site.
+            $scope.appState.site.synced_at = new Date().toISOString();
+            MainDB.addSite($scope.appState.site);
+            // auto redirect
+            $timeout(function(){
+                $location.path('/sites/' + $scope.siteId + '/customers/list').search({});
+            }, 5000);
+        }
+    });
+
     /**
      * check if sync is completed.
      *
      * @return {Boolean} [description]
      */
     $scope.isSyncCompleted = function(){
-        return $scope.titleSyncComplete && $scope.ratingTypeSyncComplete && $scope.orderStatusTypeSyncComplete && $scope.leadSourceSyncComplete && $scope.customerTypeSyncComplete && $scope.industryTypesSyncComplete && $scope.customerSyncComplete && $scope.orderSyncComplete;
+        $scope.synced = $scope.titleSyncComplete && $scope.ratingTypeSyncComplete && $scope.orderStatusTypeSyncComplete && $scope.leadSourceSyncComplete && $scope.customerTypeSyncComplete && $scope.industryTypesSyncComplete && $scope.customerSyncComplete && $scope.orderSyncComplete;
+
+        return $scope.synced;
     }
 
 

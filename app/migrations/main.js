@@ -46,6 +46,9 @@ app.factory('MainDB', ['$q',function($q){
 
 
         var data = {id: site.id, name: site.name, uri: uri};
+        if(site.synced_at){
+            data.synced_at = site.synced_at;
+        }
         var self = this;
 
         this.connection.select('sites', '*', 'id=' + site.id, {}, function(results){
