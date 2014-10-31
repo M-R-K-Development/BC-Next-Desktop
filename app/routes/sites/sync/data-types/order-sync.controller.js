@@ -31,7 +31,7 @@ app.controller('OrderSyncCtrl', ['$scope', 'OrderResource', 'SiteDatabase', '$ro
         if($scope.completedOrders != $scope.totalOrders){
             $scope.syncOrders($scope.completedOrders);
         } else {
-            $scope.orderSyncComplete = true;
+            $scope.$parent.orderSyncComplete = true;
         }
     });
 

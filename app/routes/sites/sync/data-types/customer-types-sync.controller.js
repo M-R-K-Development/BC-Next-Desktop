@@ -28,7 +28,7 @@ app.controller('CustomerTypeSyncCtrl', ['$scope', 'CustomerTypeResource', 'SiteD
         if($scope.completedCustomerTypes != $scope.totalCustomerTypes){
             $scope.syncCustomerTypes($scope.completedCustomerTypes);
         } else {
-            $scope.customerTypeSyncComplete = true;
+            $scope.$parent.customerTypeSyncComplete = true;
         }
     });
 

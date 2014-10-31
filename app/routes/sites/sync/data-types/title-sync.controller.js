@@ -28,7 +28,7 @@ app.controller('TitleSyncCtrl', ['$scope', 'TitleResource', 'SiteDatabase', func
         if($scope.completedTitles != $scope.totalTitles){
             $scope.syncTitles($scope.completedTitles);
         } else {
-            $scope.titleSyncComplete = true;
+            $scope.$parent.titleSyncComplete = true;
         }
     });
 

@@ -13,7 +13,6 @@ app.controller('SitesSyncCtrl', ['$scope', '$routeParams', 'SiteDatabase', funct
      * @type {[type]}
      */
     $scope.siteId = $routeParams.id;
-    $scope.customerProgress = 0;
 
     /**
      * Title progress related fields
@@ -89,6 +88,17 @@ app.controller('SitesSyncCtrl', ['$scope', '$routeParams', 'SiteDatabase', funct
     $scope.completedOrders = 0;
     $scope.orderSyncComplete = false;
     $scope.totalOrders;
+
+
+
+    /**
+     * check if sync is completed.
+     *
+     * @return {Boolean} [description]
+     */
+    $scope.isSyncCompleted = function(){
+        return $scope.titleSyncComplete && $scope.ratingTypeSyncComplete && $scope.orderStatusTypeSyncComplete && $scope.leadSourceSyncComplete && $scope.customerTypeSyncComplete && $scope.industryTypesSyncComplete && $scope.customerSyncComplete && $scope.orderSyncComplete;
+    }
 
 
 

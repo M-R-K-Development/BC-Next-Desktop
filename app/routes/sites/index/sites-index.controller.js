@@ -118,14 +118,17 @@ app.controller('SitesIndexCtrl', ['$scope', 'State', '$location', 'SiteService',
 
     // initialise
     if(State.internet){
-        SiteService.list(State.token).
-            success(function(data){
-                var sites = data.items;
-                $scope.saveSites(sites);
-            }).
-            error(function(data){
-                $location.path('/auth/login');
-            });
+        MainDB.getToken().then(function(token){
+            State.token = token;
+            SiteService.list(State.token).
+                success(function(data){
+                    var sites = data.items;
+                    $scope.saveSites(sites);
+                }).
+                error(function(data){
+                    $location.path('/auth/login');
+                });
+        });
     } else {
         $scope.getSites();
     }

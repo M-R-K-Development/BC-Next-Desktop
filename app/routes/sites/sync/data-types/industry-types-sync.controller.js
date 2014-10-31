@@ -28,7 +28,7 @@ app.controller('IndustryTypeSyncCtrl', ['$scope', 'IndustryTypeResource', 'SiteD
         if($scope.completedIndustryTypes != $scope.totalIndustryTypes){
             $scope.syncIndustryTypes($scope.completedIndustryTypes);
         } else {
-            $scope.industryTypesSyncComplete = true;
+            $scope.$parent.industryTypesSyncComplete = true;
         }
     });
 

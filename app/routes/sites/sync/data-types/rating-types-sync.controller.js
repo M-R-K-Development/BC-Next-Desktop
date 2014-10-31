@@ -28,7 +28,7 @@ app.controller('RatingTypesSyncCtrl', ['$scope', 'RatingTypesResource', 'SiteDat
         if($scope.completedRatingTypes != $scope.totalRatingTypes){
             $scope.syncRatingTypes($scope.completedRatingTypes);
         } else {
-            $scope.ratingTypeSyncComplete = true;
+            $scope.$parent.ratingTypeSyncComplete = true;
         }
     });
 

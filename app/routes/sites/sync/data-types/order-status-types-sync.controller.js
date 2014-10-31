@@ -28,7 +28,7 @@ app.controller('OrderStatusTypesSyncCtrl', ['$scope', 'OrderStatusResource', 'Si
         if($scope.completedOrderStatusTypes != $scope.totalOrderStatusTypes){
             $scope.syncOrderTypes($scope.completedOrderStatusTypes);
         } else {
-            $scope.orderStatusSyncComplete = true;
+            $scope.$parent.orderStatusTypeSyncComplete = true;
         }
     });
 

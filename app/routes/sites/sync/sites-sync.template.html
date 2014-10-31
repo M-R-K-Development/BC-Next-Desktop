@@ -120,8 +120,8 @@
                 </tbody>
             </table>
         </div>
-        <div class="box-footer clearfix" ng-show='titleSyncComplete'>
-            <a href="#" class="btn btn-sml btn-success btn-block">Synchronisation Complete</a>
+        <div class="box-footer clearfix" ng-show='isSyncCompleted()'>
+            <a href="#/sites/{{ appState.site.id }}/customers/list" class="btn btn-sml btn-success btn-block">Synchronisation Complete</a>
         </div>
     </div>
 

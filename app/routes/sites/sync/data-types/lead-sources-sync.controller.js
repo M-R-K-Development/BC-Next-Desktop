@@ -28,7 +28,7 @@ app.controller('LeadSourceSyncCtrl', ['$scope', 'LeadSourceType', 'SiteDatabase'
         if($scope.completedLeadSources != $scope.totalLeadSources){
             $scope.syncLeadSourceTypes($scope.completedLeadSources);
         } else {
-            $scope.leadSourceSyncComplete = true;
+            $scope.$parent.leadSourceSyncComplete = true;
         }
     });
 

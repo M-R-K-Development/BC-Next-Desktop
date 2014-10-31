@@ -31,7 +31,7 @@ app.controller('CustomterSyncCtrl', ['$scope', 'CustomerResource', 'SiteDatabase
         if($scope.completedCustomers != $scope.totalCustomers){
             $scope.syncCustomers($scope.completedCustomers);
         } else {
-            $scope.customerSyncComplete = true;
+            $scope.$parent.customerSyncComplete = true;
         }
     });
 
