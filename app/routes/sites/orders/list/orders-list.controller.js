@@ -11,6 +11,8 @@ app.controller('OrdersListCtrl', ['$scope', 'SiteDatabase' ,'$routeParams', func
     $scope.totalOrders;
     $scope.limit = 15;
     $scope.orders = [];
+    $scope.orderStatuses = [];
+    $scope.paymentMethods = {1 : 'Credit card', 2 : 'Check', 3 : 'Cash', 4 : 'EFT'};
 
     SiteDatabase.init($routeParams.siteId);
 
@@ -49,14 +51,25 @@ app.controller('OrdersListCtrl', ['$scope', 'SiteDatabase' ,'$routeParams', func
             });
 
         // orders
-        SiteDatabase.getOrders([], {limit: limit, offset: skip}).
+        SiteDatabase.getOrders([], {offset: skip, order: "id DESC", limit: limit}).
             then(function(orders){
-                console.log(orders);
                 $scope.orders = orders;
+
+                // orders
+                angular.forEach(orders, function(order, i){
+                    SiteDatabase.getCustomer(order.entityId).then(function(customer){
+                        $scope.orders[i].customer = customer;
+                    });
+
+                    if(order.userIdAssignedTo != 'undefined'){
+                        SiteDatabase.getCustomer(order.userIdAssignedTo).then(function(assignedTo){
+                            $scope.orders[i].assignedTo = assignedTo;
+                        });
+                    }
+                })
             });
     }
 
-    $scope.currentPage = 1;
 
 
 
@@ -78,6 +91,22 @@ app.controller('OrdersListCtrl', ['$scope', 'SiteDatabase' ,'$routeParams', func
 
         return label;
     }
+
+
+    SiteDatabase.getOrderStatuses().then(function(orderStatuses){
+        $scope.orderStatuses = orderStatuses;
+        // init page
+        $scope.currentPage = 1;
+    });
+
+    $scope.getPaymentMethodType = function(id){
+        if($scope.paymentMethods[id]){
+            return $scope.paymentMethods[id];
+        }
+
+        return '';
+    }
+
 
 
 }]);

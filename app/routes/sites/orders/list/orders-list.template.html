@@ -13,7 +13,7 @@
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
                 <li>
-                    <a href="#">
+                    <a href="#/sites/{{ appState.site.id }}/customers/list">
                         <i class="fa fa-users"></i>
                         <span>Contacts</span>
                     </a>
@@ -42,11 +42,11 @@
     </aside>
     <aside class="right-side">
         <section class="content-header">
-            <h1>Customers</h1>
+            <h1>Orders</h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Site List</a>
                 </li>
-                <li class="active">Customers Listing</li>
+                <li class="active">Orders Listing</li>
             </ol>
         </section>
         <section class="content">
@@ -63,25 +63,33 @@
                                 <table id="example2" class="table table-bordered table-hover dataTable" aria-describedby="example2_info">
                                     <thead>
                                         <tr role="row">
-                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Title</th>
-                                            <th class="sorting_asc" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">Name</th>
-                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Customer Type</th>
-                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Lead Source</th>
-                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Rating Type</th>
-                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Company</th>
-                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Username</th>
+                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Invoice</th>
+                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Name</th>
+                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Customer</th>
+                                            <th class="sorting_asc" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">Status</th>
+                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Total</th>
+                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Payment Method</th>
+                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Recurring</th>
+                                            <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Assigned To</th>
                                         </tr>
                                     </thead>
 
                                     <tbody role="alert" aria-live="polite" aria-relevant="all">
-                                        <tr ng-class="{ 'odd' : ($index % 2) == 1, 'even' : ($index % 2) == 0 }" ng-repeat="customer in customers">
-                                            <td class=" ">{{ getType(customer.titleTypeId, titles) }}</td>
-                                            <td class=" sorting_1">{{ customer.firstName }}<span ng-if='customer.middleName.length'> {{ customer.middleName }} </span> {{ customer.lastName }}</td>
-                                            <td class=" ">{{ getType(customer.customerTypeId, customerTypes) }}</td>
-                                            <td class=" ">{{ getType(customer.leadSourceTypeId, leadSourceTypes) }}</td>
-                                            <td class=" ">{{ getType(customer.ratingTypeId, ratingTypes) }}</td>
-                                            <td>{{ customer.company }}</td>
-                                            <td>{{ customer.username }}</td>
+                                        <tr ng-class="{ 'odd' : ($index % 2) == 1, 'even' : ($index % 2) == 0 }" ng-repeat="order in orders">
+                                            <td><span ng-show='order.invoiced != "false"'>#{{ order.invoiceNumber }}, {{ order.invoiceDate | date  }}</span>&nbsp;</td>
+                                            <td class=" sorting_1">{{ order.customer.firstName }}<span ng-if='order.customer.middleName.length'> {{ order.customer.middleName }} </span> {{ order.customer.lastName }}</td>
+
+                                            <td>{{ order.name }}</td>
+                                            <td class=" ">{{ getType(order.statusTypeId, orderStatuses) }}</td>
+                                            <td>{{ order.totalPrice | currency }}</td>
+                                            <td>{{ getPaymentMethodType(order.paymentMethodTypeId) }}</td>
+                                            <td>
+                                                <span ng-if='order.recur == "true"'>Yes</span>
+                                                <span ng-if='order.recur == "false"'>No</span>
+                                            </td>
+
+                                            <td>{{ order.assignedTo.firstName }}<span ng-if='order.assignedTo.middleName.length'> {{ order.assignedTo.middleName }} </span> {{ order.assignedTo.lastName }}</td>
+
                                         </tr>
                                     </tbody>
                                 </table>

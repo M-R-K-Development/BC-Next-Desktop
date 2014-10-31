@@ -316,7 +316,33 @@ app.service('SiteDatabase', ['$q', 'State', function($q, State){
             });
             return deferred.promise;
 
-        }
+        },
+        getCustomer : function(id){
+            var deferred = $q.defer();
+            this.connection.select('customers', '*', "id="+id, {limit:1}, function(results){
+                var len = results.rows.length;
+
+                if(len){
+                    deferred.resolve(results.rows.item(0));
+                }
+            });
+            return deferred.promise;
+        },
+        getOrderStatuses: function(){
+            var deferred = $q.defer();
+
+            this.connection.select('order_statuses', '*', [], {}, function(results){
+                var len = results.rows.length, i;
+                var items = [];
+                for (var i = 0; i < len; i++) {
+                    items.push(angular.copy(results.rows.item(i)))
+                };
+                deferred.resolve(items);
+            });
+            return deferred.promise;
+
+        },
+
 
     }
 }])

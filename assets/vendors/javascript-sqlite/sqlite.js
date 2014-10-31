@@ -170,13 +170,13 @@ function SQLite(cfg) {
     query = query.replace('#cond#', conditions[0]);
 
     if (options) {
+      if (options.order) {
+        query = query + ' ORDER BY ' + options.order;
+
+      }
       if (options.limit) {
         query = query + ' LIMIT ?';
         values.push(options.limit);
-      }
-      if (options.order) {
-        query = query + ' ORDER BY ?';
-        values.push(options.order);
       }
       if (options.offset) {
         query = query + ' OFFSET ?';
