@@ -36,6 +36,8 @@ app.controller('SitesIndexCtrl', ['$scope', 'State', '$location', 'SiteService',
             MainDB.addSite(site)
         });
 
+        MainDB.keepSites($scope.siteIds);
+
         $scope.getSites();
     }
 

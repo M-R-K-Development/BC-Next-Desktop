@@ -61,6 +61,13 @@ app.factory('MainDB', ['$q',function($q){
         });
 
     },
+    keepSites : function(siteIds){
+        this.connection.database.transaction(function (transaction) {
+            var query = 'DELETE from sites where id NOT IN (' + siteIds.join(',') + ');';
+            transaction.executeSql(query, []);
+          }
+        );
+    },
     /**
      * [sites description]
      *
