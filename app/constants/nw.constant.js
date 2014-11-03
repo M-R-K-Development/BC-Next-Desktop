@@ -5,6 +5,7 @@ var appDir = process.cwd();
 
 
 win = gui.Window.get();
+win.maximize();
 var nativeMenuBar = new gui.Menu({ type: "menubar" });
 try {
 nativeMenuBar.createMacBuiltin("My App");

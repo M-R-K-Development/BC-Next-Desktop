@@ -121,10 +121,13 @@ app.controller('SitesIndexCtrl', ['$scope', 'State', '$location', 'SiteService',
 
     // initialise
     if(State.internet){
+        $scope.appState.loading = 'Fetching site list from your BC account';
+
         MainDB.getToken().then(function(token){
             State.token = token;
             SiteService.list(State.token).
                 success(function(data){
+                    $scope.appState.loading = false;
                     angular.forEach(data.items, function(item){
                         $scope.siteIds.push(item.id);
                     });
@@ -132,6 +135,7 @@ app.controller('SitesIndexCtrl', ['$scope', 'State', '$location', 'SiteService',
                     $scope.saveSites(data.items);
                 }).
                 error(function(data){
+                    $scope.appState.loading = false;
                     $location.path('/auth/login');
                 });
         });

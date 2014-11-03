@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html style='height:1000px'>
+<html>
     <head>
         <meta charset="UTF-8">
         <title>BC App Center | Login</title>
@@ -23,9 +23,19 @@
         <!-- Theme style -->
         <link href="assets/css/AdminLTE.css" rel="stylesheet" type="text/css" />
         <link href="assets/specifics/login/login.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/loading-overlay/style.css" rel="stylesheet" type="text/css" />
     </head>
-    <body class="skin-blue" ng-app='bcNextApp'>
-        <!-- TODO: get top nav to show hide depending on the states -->
+    <body class="skin-blue" ng-app='bcNextApp' ng-class='{"loading": appState.loading}'>
+
+        <div class="loading-overlay" ng-show='appState.loading'>
+        </div>
+        <div  ng-show='appState.loading'>
+            <p class="loading-spinner">
+                <span class="loading-icon"></span>
+                <span class="loading-text">{{ appState.loading }}</span>
+            </p>
+        </div>
+
         <header ng-include="'app/routes/global/topnav/global-topnav.template.html'" ng-show='appState.token.length' class='header'></header>
 
         <div class="row-fluid">

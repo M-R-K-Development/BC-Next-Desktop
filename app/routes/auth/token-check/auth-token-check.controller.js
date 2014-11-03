@@ -2,9 +2,12 @@ app.controller('TokenCheckCtrl', ['$scope', '$location', 'State', 'MainDB', func
         MainDB.create();
         MainDB.migrate();
 
+        $scope.appState.loading = 'Please wait while we check your authorisation token';
+
         // check if we have an internet connection
         var dns = require("dns");
         dns.resolve("google.com", function(error){
+        $scope.appState.loading = false;
             if(!error){
                 State.internet = true;
                 $scope.tokenizedLogin();

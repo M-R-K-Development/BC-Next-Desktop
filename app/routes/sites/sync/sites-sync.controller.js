@@ -97,6 +97,7 @@ app.controller('SitesSyncCtrl', ['$scope', '$routeParams', 'SiteDatabase', '$loc
             // save timestamp and update flag for site.
             $scope.appState.site.synced_at = new Date().toISOString();
             MainDB.addSite($scope.appState.site);
+            $scope.appState.loading = false;
             // auto redirect
             $timeout(function(){
                 $location.path('/sites/' + $scope.siteId + '/customers/list').search({});
@@ -119,4 +120,6 @@ app.controller('SitesSyncCtrl', ['$scope', '$routeParams', 'SiteDatabase', '$loc
 
     SiteDatabase.init($scope.siteId);
     SiteDatabase.migrate();
+
+    $scope.appState.loading = 'Please wait while we sync data from your ' +  $scope.appState.site.name + ' account';
 }]);
